@@ -1,0 +1,16 @@
+CREATE TABLE CUSTOMERS (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    name NVARCHAR(100) NOT NULL,
+    surname NVARCHAR(100) NOT NULL,
+    age INT NOT NULL,
+    phone_number NVARCHAR(15) NOT NULL
+);
+
+CREATE TABLE ORDERS (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    date DATETIME NOT NULL,
+    customer_id INT,
+    product_name NVARCHAR(100) NOT NULL,
+    amount DECIMAL(10, 2) NOT NULL,
+    FOREIGN KEY (customer_id) REFERENCES CUSTOMERS(id)
+);

@@ -1,16 +1,21 @@
-CREATE TABLE CUSTOMERS (
-    id INT IDENTITY(1,1) PRIMARY KEY,
-    name NVARCHAR(100) NOT NULL,
-    surname NVARCHAR(100) NOT NULL,
-    age INT NOT NULL,
-    phone_number NVARCHAR(15) NOT NULL
+DROP DATABASE IF EXISTS postgres;
+CREATE DATABASE postgres;
+
+USE postgres;
+
+CREATE TABLE IF NOT EXISTS CUSTOMERS (
+                                         id INT PRIMARY KEY AUTO_INCREMENT,
+                                         name VARCHAR(255) NOT NULL,
+                                         surname VARCHAR(255) NOT NULL,
+                                         age INT CHECK (age > 0 AND age < 150),
+                                         phone_number VARCHAR(25)
 );
 
-CREATE TABLE ORDERS (
-    id INT IDENTITY(1,1) PRIMARY KEY,
-    date DATETIME NOT NULL,
-    customer_id INT,
-    product_name NVARCHAR(100) NOT NULL,
-    amount DECIMAL(10, 2) NOT NULL,
-    FOREIGN KEY (customer_id) REFERENCES CUSTOMERS(id)
+CREATE TABLE IF NOT EXISTS ORDERS (
+                                      id INT PRIMARY KEY AUTO_INCREMENT,
+                                      date DATETIME NOT NULL DEFAULT now(),
+                                      customer_id INT NOT NULL,
+                                      product_name VARCHAR(255) NOT NULL,
+                                      amount INT NOT NULL CHECK (amount > 0),
+                                      FOREIGN KEY (customer_id) REFERENCES CUSTOMERS (id)
 );
